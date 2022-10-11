@@ -1,0 +1,94 @@
+$primary-color: #FD2D01;
+$secondary-color: #FFD7D7;
+$third-color: #4E5166;
+
+.card {
+  box-sizing: border-box;
+  width: 50%;
+  margin: 20px auto;
+  padding: 10px 30px;
+  box-shadow: lightgray 4px 4px 20px;
+  border-radius: 10px;
+
+  .user-and-date {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+
+    .user {
+      display: flex;
+      width: 50%;
+      justify-content: flex-start;
+      gap: 10px;
+      flex-direction: row;
+
+
+      p {
+        font-weight: bold;
+        font-size: 16px;
+      }
+    }
+
+  }
+
+  .date-delete-modify {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    .fa-trash {
+      color: $primary-color;
+    }
+
+    .fa-pen-to-square {
+      color: $third-color;
+    }
+  }
+
+  img {
+    max-height: 200px;
+    display: block;
+    margin: auto;
+  }
+
+  button {
+    background-color: transparent;
+    box-sizing: border-box;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: lightgray 3px 3px 7px;
+    margin-right: 20px;
+    outline: none;
+    font-size: 14px;
+    font-weight: 500;
+
+    &:active {
+      transform: translate(1px, 1px);
+      box-shadow: lightgray 0 0 5px;
+    }
+
+  }
+}
+
+@media screen and (max-width: 800px) {
+
+  .card {
+    margin: 10px auto;
+    width: 300px;
+
+    .user-and-date {
+      flex-wrap: wrap;
+
+      .user {
+        width: auto;
+      }
+    }
+
+    .date-delete-modify {
+      width: auto;
+      justify-content: flex-end;
+    }
+  }
+}

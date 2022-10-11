@@ -1,0 +1,8 @@
+<button routerLink="/new-card">Écrire un nouveau post !</button>
+
+<app-groupomania-card class="card-list-item" *ngFor="let card of cards$ | async" [card]="card">
+  <p>
+    Aucun post n'est disponible
+  </p>
+  <!--(click)="onClickCard(card._id)"-->
+</app-groupomania-card>

@@ -1,0 +1,27 @@
+$primary-color: #FD2D01;
+$secondary-color: #FFD7D7;
+$third-color: #4E5166;
+
+* {
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  margin: 0px;
+  padding: 0px;
+}
+
+button {
+  color: white;
+  background-color: $primary-color;
+  font-size: 15px;
+  border: none;
+  border-radius: 20px;
+  width: 100px;
+  height: 40px;
+
+  button:disabled {
+    color: black;
+    background-color: $third-color;
+  }
+}

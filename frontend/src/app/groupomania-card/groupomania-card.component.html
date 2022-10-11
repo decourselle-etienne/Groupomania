@@ -1,0 +1,21 @@
+<div class="card">
+  <div class="user-and-date">
+    <div class="user">
+      <p>{{card.nom.charAt(0).toUpperCase()}}.{{card.prenom.charAt(0).toUpperCase()}}</p>
+
+    </div>
+    <div class="date-delete-modify">
+      <p>posté le {{card.createdDate | date: 'dd/MM'}}</p>
+      <i class="fa-solid fa-trash" *ngIf="canDeleteOrModify()" (click)="Delete()"></i>
+      <i class="fa-solid fa-pen-to-square" *ngIf="canDeleteOrModify()" (click)="Modify()"></i>
+    </div>
+  </div>
+  <div class="content">
+    <p class="content__text">{{card.content}}</p>
+    <img [src]="card.imageUrl" [alt]="">
+  </div>
+  <div class="likes">
+    <i class="fa-solid fa-thumbs-up" (click)="Like()"></i>
+    <span> {{ card.likes }} </span>
+  </div>
+</div>

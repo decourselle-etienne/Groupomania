@@ -1,0 +1,18 @@
+<div class="form-card">
+  <form [formGroup]="cardForm">
+    <div class="form-group">
+      <textarea autocomplete="off" appTextareaAutoresize aria-label="content" type="text" class="form-content"
+        id="content" formControlName="content"></textarea>
+    </div>
+
+    <div class="form-group button-row">
+      <input type="file" accept="image/*" #imageInput (change)="onFileAdded($event)">
+      <button mat-raised-button color="primary" (click)="imageInput.click()">ADD IMAGE</button>
+      <img [src]="imagePreview" *ngIf="imagePreview">
+      <button (click)="onSubmit()" [disabled]="cardForm.invalid">Poster</button>
+    </div>
+    <div class="form-group button-row">
+
+    </div>
+  </form>
+</div>

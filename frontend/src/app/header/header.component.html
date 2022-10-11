@@ -1,0 +1,23 @@
+<header>
+  <img class="logo" alt="Groupomania Logo" src="../../assets/icon-left-font-monochrome-black.svg">
+  <nav>
+    <div class="left-nav">
+      <a routerLink="cards" routerLinkActive="active" *ngIf="isAuth$ |async">
+        Home
+      </a>
+
+    </div>
+
+    <div class="right-nav">
+      <a routerLink="auth/signup" routerLinkActive="active" *ngIf="!(isAuth$  |async)">
+        SIGN UP
+      </a>
+      <a routerLink="auth/login" routerLinkActive="active" *ngIf="!(isAuth$  |async)">
+        LOGIN
+      </a>
+      <a (click)="onLogout()" *ngIf="isAuth$ |async">
+        LOGOUT
+      </a>
+    </div>
+  </nav>
+</header>

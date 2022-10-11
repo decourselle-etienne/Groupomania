@@ -1,0 +1,39 @@
+<h1> Inscrivez-vous</h1>
+
+<form [formGroup]="signupForm" *ngIf="!loading">
+  <div class="form-group">
+    <label for="prenom">Prénom</label>
+    <input type="text" class="form-control" id="firstname" formControlName="prenom">
+    <p class="form-error"
+      *ngIf="signupForm.controls['prenom'].hasError('required') && signupForm.controls['prenom'].touched "> Veuillez
+      entrer votre nom</p>
+  </div>
+  <div class="form-group">
+    <label for="nom">Nom</label>
+    <input type="text" class="form-control" id="lastname" formControlName="nom">
+    <p class="form-error"
+      *ngIf="signupForm.controls['nom'].hasError('required') && signupForm.controls['nom'].touched "> Veuillez
+      entrer votre prénom</p>
+  </div>
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" class="form-control" id="email" formControlName="email">
+    <p class="form-error" *ngIf="signupForm.get('email')?.invalid && signupForm.controls['email'].touched">
+      Veuillez entrer un email valide
+    </p>
+  </div>
+  <div class="form-group">
+    <label for="password">Mot de passe</label>
+    <input type="password" class="form-control" id="password" formControlName="password">
+    <div *ngIf="signupForm.controls['password'].invalid && signupForm.controls['password'].touched">
+      <p class="form-error">Le mot de passe doit contenir : <br>
+        9 caractères<br>
+        1 Majuscule<br>
+        1 minuscule<br>
+        1 chiffre<br>
+        1 caractère spécial</p>
+    </div>
+  </div>
+  <button mat-raised-button color="primary" (click)="onSignup()">S'inscrire</button>
+  <p class="text-danger" *ngIf="errorMessage">{{ errorMessage }}</p>
+</form>
