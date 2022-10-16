@@ -20,6 +20,7 @@ export class CardListComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
+    // affiche la liste complète des cards (posts) sur la page
     this.loading = true;
     this.cards$ = this.cardsService.cards$.pipe(
       tap(() => {

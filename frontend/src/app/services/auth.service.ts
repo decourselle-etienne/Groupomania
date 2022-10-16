@@ -21,22 +21,18 @@ export class AuthService {
   constructor(private http: HttpClient,
     private router: Router) { }
 
+  // fonction de création de l'utilisateur
   createUser(email: string, password: string, prenom: string, nom: string) {
     return this.http.post<{ message: string }>('http://localhost:3000/api/auth/signup', { email: email, password: password, prenom: prenom, nom: nom });
   }
 
+  // fonction pour reprendre les données utilisateur
   getUserValue() {
     let storageUser = String(localStorage.getItem('User'));
     return storageUser
   }
-  getToken() {
-    return this.authToken;
-  }
 
-  getUserId() {
-    return this.userId;
-  }
-
+  // fonction de login > enregistrement du statut connecté et des données principales User
   loginUser(email: string, password: string) {
     return this.http.post<{ nom: string, prenom: string, role: string, userId: string, token: string }>('http://localhost:3000/api/auth/login', { email: email, password: password }).pipe(
       tap((user) => {
@@ -50,6 +46,7 @@ export class AuthService {
   }
 
 
+  //fonction de Déconnexion, suppression de toutes les données et de l'authetification
   logout() {
     this.authToken = '';
     this.userId = '';

@@ -22,6 +22,7 @@ export class SignupComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    // prise en compte des champs email, password, prenom et nom pour l'inscription
     this.signupForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.pattern('^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).{9}$')]],
@@ -30,6 +31,7 @@ export class SignupComponent implements OnInit {
     });
   }
 
+  // création d'un nouvel utilisateur au click sur le bouton
   onSignup() {
     this.loading = true;
     const prenom = this.signupForm.get('prenom')!.value;
@@ -43,6 +45,7 @@ export class SignupComponent implements OnInit {
           this.loading = false;
           this.router.navigate(['/cards']);
         }),
+        // si erreur, renvoie sur la page d'inscription
         catchError(error => {
           this.loading = false;
           this.router.navigate(['auth/signup']);

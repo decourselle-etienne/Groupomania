@@ -28,6 +28,7 @@ export class NewGroupomaniaCardComponent implements OnInit {
     private auth: AuthService) { }
 
   ngOnInit() {
+    // verification du mode de création ou de modification de la card (post)
     this.loading = true;
     this.route.params.pipe(
       switchMap(params => {
@@ -53,6 +54,7 @@ export class NewGroupomaniaCardComponent implements OnInit {
     ).subscribe();
   }
 
+  // créer le formulaire vide
   initEmptyForm() {
     this.cardForm = this.formBuilder.group({
       content: [null, Validators.required],
@@ -60,6 +62,7 @@ export class NewGroupomaniaCardComponent implements OnInit {
     });
   }
 
+  // créer le formulaire à modifier
   initModifyForm(card: Card) {
     this.cardForm = this.formBuilder.group({
       content: [card.content, Validators.required],
@@ -68,11 +71,13 @@ export class NewGroupomaniaCardComponent implements OnInit {
     this.imagePreview = this.card.imageUrl;
   }
 
+  //lance la création ou modification au click sur le bouton "Poster"
   onSubmit() {
     let storageUser = String(localStorage.getItem('User'));
     let currentUser = JSON.parse(storageUser);
     this.loading = true;
 
+    // création
     if (this.mode === 'new') {
       const newCard = new Card();
       newCard.content = this.cardForm.get('content')!.value;
@@ -96,6 +101,7 @@ export class NewGroupomaniaCardComponent implements OnInit {
       ).subscribe();
     }
 
+    //modification
     else if (this.mode === 'edit') {
       const newCard = new Card();
       newCard.content = this.cardForm.get('content')!.value;
@@ -115,6 +121,7 @@ export class NewGroupomaniaCardComponent implements OnInit {
     }
   }
 
+  // permet de prendre en comtpe les fichiers ajoutés
   onFileAdded(event: Event) {
     const file = (event.target as HTMLInputElement).files![0];
     this.cardForm.get('image')!.setValue(file);

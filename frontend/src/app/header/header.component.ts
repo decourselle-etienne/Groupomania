@@ -18,6 +18,7 @@ export class HeaderComponent implements OnInit {
     this.isAuth$ = this.auth.isAuth$.pipe(shareReplay(1));
   }
 
+  //lance la fonction de déconnexion
   onLogout() {
     this.auth.logout();
   }

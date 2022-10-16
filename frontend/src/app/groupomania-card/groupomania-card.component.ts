@@ -28,6 +28,8 @@ export class GroupomaniaCardComponent implements OnInit {
     this.isAuth$ = this.auth.isAuth$.pipe(shareReplay(1));
   }
 
+
+  // navigue vers la page de modification
   Modify() {
     try {
       this.router.navigate(['/modify-card/' + this.card._id])
@@ -36,17 +38,15 @@ export class GroupomaniaCardComponent implements OnInit {
       console.error(error);
       this.router.navigate(['/cards']);
     }
-
-
-
-    //this.cardService.modifyCard(String(this.card._id), this.card, this.card.imageUrl);
   }
 
+  // Lance la fonction de suppression
   Delete() {
     this.cardService.deleteCard(String(this.card._id))
       .subscribe();
   }
 
+  // lance la fonction de like
   Like() {
     const user = JSON.parse(String(localStorage.getItem('User')));
     this.userId = user.userId;
@@ -58,6 +58,7 @@ export class GroupomaniaCardComponent implements OnInit {
       .subscribe()
   }
 
+  // vérifie si la personne peut modifier ou supprimer
   canDeleteOrModify() {
     const user = JSON.parse(String(localStorage.getItem('User')));
     this.userId = user.userId;

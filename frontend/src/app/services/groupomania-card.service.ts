@@ -18,6 +18,7 @@ export class GroupomaniaCardService {
   constructor(private http: HttpClient,
     private auth: AuthService) { }
 
+  // Prise des cards (posts) depuis l'API
   getCards(): Observable<Card[]> {
     this.http.get<Card[]>('http://localhost:3000/api/cards').pipe(
       tap(cards => {
@@ -32,6 +33,7 @@ export class GroupomaniaCardService {
     return this.cards$;
   }
 
+  // permet de selectionner une card (post) spécifique via son Id
   getCardById(id: string) {
     return this.http.get<Card>('http://localhost:3000/api/cards/' + id).pipe(
       tap((card) => {
@@ -40,11 +42,13 @@ export class GroupomaniaCardService {
     );
   }
 
+  // permet de liker un card
   likeCard(user: string, id: string, like: boolean) {
     return this.http.post<{ message: string }>(
       'http://localhost:3000/api/cards/' + id + '/like',
       { userId: user, like: like ? true : false }
     ).pipe(
+
       tap(() => {
         const index = this.cards.findIndex(card => card._id === id);
         if (index !== -1) {
@@ -68,6 +72,7 @@ export class GroupomaniaCardService {
     );
   }
 
+  // permet de créer une card (post)
   createCard(card: Card, image: File) {
     const formData = new FormData();
     formData.append('card', JSON.stringify(card));
@@ -77,6 +82,7 @@ export class GroupomaniaCardService {
     );
   }
 
+  // permet de modifier une card (post)
   modifyCard(id: string, card: Card, image: string | File) {
     if (typeof image === 'string') {
       return this.http.put<{ message: string }>('http://localhost:3000/api/cards/' + id, card).pipe(
@@ -92,6 +98,7 @@ export class GroupomaniaCardService {
     }
   }
 
+  // permet de supprimer une card (post)
   deleteCard(id: string) {
     return this.http.delete<{ message: string }>('http://localhost:3000/api/cards/' + id).pipe(
       tap(() => {
