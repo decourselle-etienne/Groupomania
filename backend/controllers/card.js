@@ -47,31 +47,40 @@ exports.afficherCardById = (req, res, next) => {
 exports.modifycard = (req, res, next) => {
   try {
     let cardObject = {}
-    if (req.file) {
-      card.findOne({
-        _id: req.params.id
-      }).then((card) => {
-        const filename = card.imageUrl.split('/images/')[1]
-        fs.unlinkSync(`images/${filename}`)
-      }),
-        cardObject = {
-          ...JSON.parse(req.body),
-          imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+    card.findOne({ _id: req.params.id })
+      .then((card) => {
+        if (req.auth.userId != card.userId && req.auth.role != "admin") {
+          res.status(401).json({ message: `Vous n'avez pas l'autorisation de modifier ce post` })
         }
+        else {
+          if (req.file) {
+            card.findOne({
+              _id: req.params.id
+            }).then((card) => {
+              const filename = card.imageUrl.split('/images/')[1]
+              fs.unlinkSync(`images/${filename}`)
+            }),
+              cardObject = {
+                ...JSON.parse(req.body),
+                imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+              }
 
-    }
-    else {
-      cardObject = { ...req.body }
-    }
+          }
+          else {
+            cardObject = { ...req.body }
+          }
 
-    card.updateOne(
-      { _id: req.params.id }, { ...cardObject }
-    )
-      .then(() => res.status(200).json({ message: 'card modifié !' }))
-      .catch(() => {
-        throw new Error(`Erreur lors de l'enregistrement de la modification`)
+          card.updateOne(
+            { _id: req.params.id }, { ...cardObject }
+          )
+            .then(() => res.status(200).json({ message: 'card modifié !' }))
+            .catch(() => {
+              throw new Error(`Erreur lors de l'enregistrement de la modification`)
+            })
+        }
       })
   }
+
   catch (error) {
     res.status(500).json({ error })
   }
@@ -80,11 +89,10 @@ exports.modifycard = (req, res, next) => {
 exports.deletecard = (req, res, next) => {
   card.findOne({ _id: req.params.id })
     .then((card) => {
-      console.log(req.auth);
       if (req.auth.userId != card.userId && req.auth.role != "admin") {
         res.status(401).json({ message: `Vous n'avez pas l'autorisation de supprimer ce post` })
       } else {
-        if (card.imageUrl != '') {
+        if (card.imageUrl != null) {
           let filename = card.imageUrl.split('/images/')[1];
           fs.unlink(`images/${filename}`, () => {
             card.deleteOne({ _id: req.params.id })
@@ -135,7 +143,7 @@ exports.likecard = (req, res, next) => {
   if (like === false) {
     card.findOne({ _id: cardId })
       .then((card) => {
-        if (!card.usersLiked.includes(userId)) {
+        if (!card.usersLiked.includes(userId) === false) {
           res.status(201).json({ message: "post déjà disliké" });
         }
         else {
