@@ -80,20 +80,26 @@ exports.modifycard = (req, res, next) => {
 exports.deletecard = (req, res, next) => {
   card.findOne({ _id: req.params.id })
     .then((card) => {
-      if (card.imageUrl != null) {
-        let filename = card.imageUrl.split('/images/')[1];
-        fs.unlink(`images/${filename}`, () => {
+      console.log(req.auth);
+      if (req.auth.userId != card.userId && req.auth.role != "admin") {
+        res.status(401).json({ message: `Vous n'avez pas l'autorisation de supprimer ce post` })
+      } else {
+        if (card.imageUrl != '') {
+          let filename = card.imageUrl.split('/images/')[1];
+          fs.unlink(`images/${filename}`, () => {
+            card.deleteOne({ _id: req.params.id })
+              .then(() => res.status(200).json({ message: 'post et image supprimés' }))
+              .catch(error => res.status(400).json({ error }));
+          })
+        }
+        else {
           card.deleteOne({ _id: req.params.id })
-            .then(() => res.status(200).json({ message: 'post et image supprimés' }))
+            .then(() => res.status(200).json({ message: 'post supprimé' }))
             .catch(error => res.status(400).json({ error }));
-        })
-      }
-      else {
-        card.deleteOne({ _id: req.params.id })
-          .then(() => res.status(200).json({ message: 'post supprimé' }))
-          .catch(error => res.status(400).json({ error }));
+        }
       }
     })
+
     .catch(error => res.status(500).json({ error }));
 };
 
@@ -107,14 +113,19 @@ exports.likecard = (req, res, next) => {
   if (like === true) {
     card.findOne({ _id: cardId })
       .then((card) => {
-        card.updateOne({ $push: { usersLiked: userId }, $inc: { likes: +1 } })
-          .then(() => {
-            res.status(200).json({ message: 'like ajouté' })
-          }
-          )
-          .catch(error => {
-            throw new Error(`Erreur lors de l'ajout du Like`)
-          })
+        if (card.usersLiked.includes(userId)) {
+          res.status(201).json({ message: "post déjà liké" });
+        }
+        else {
+          card.updateOne({ $push: { usersLiked: userId }, $inc: { likes: +1 } })
+            .then(() => {
+              res.status(200).json({ message: 'like ajouté' })
+            }
+            )
+            .catch(error => {
+              throw new Error(`Erreur lors de l'ajout du Like`)
+            })
+        }
       })
       .catch(error => {
         throw new Error(`Carte non trouvée`)
@@ -124,11 +135,16 @@ exports.likecard = (req, res, next) => {
   if (like === false) {
     card.findOne({ _id: cardId })
       .then((card) => {
-        card.updateOne({ $pull: { usersLiked: userId }, $inc: { likes: -1 }, })
-          .then(() => res.status(200).json({ message: 'like supprimé' }))
-          .catch(error => {
-            throw new Error(`Erreur lors de la suppresion du Like`)
-          })
+        if (!card.usersLiked.includes(userId)) {
+          res.status(201).json({ message: "post déjà disliké" });
+        }
+        else {
+          card.updateOne({ $pull: { usersLiked: userId }, $inc: { likes: -1 }, })
+            .then(() => res.status(200).json({ message: 'like supprimé' }))
+            .catch(error => {
+              throw new Error(`Erreur lors de la suppresion du Like`)
+            })
+        }
       })
       .catch(error => res.status(500).json({ error }))
   }

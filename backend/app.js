@@ -26,7 +26,7 @@ app.use(mongoSanitize({ allowDots: true, replaceWith: '_', }),);
 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,
-    max: 500,
+    max: 50,
     standardHeaders: true,
     legacyHeaders: false
 })
