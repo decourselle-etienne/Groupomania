@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: 'cards', component: CardListComponent, canActivate: [AuthVerify] },
   { path: 'new-card', component: NewGroupomaniaCardComponent, canActivate: [AuthVerify] },
   { path: 'modify-card/:id', component: NewGroupomaniaCardComponent, canActivate: [AuthVerify] },
-  { path: '', pathMatch: 'full', redirectTo: 'cards' },
+  { path: '**', pathMatch: 'full', redirectTo: 'cards' },
 ];
 
 @NgModule({
