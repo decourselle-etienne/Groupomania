@@ -102,10 +102,8 @@ export class GroupomaniaCardService {
   deleteCard(id: string) {
     return this.http.delete<{ message: string }>('http://localhost:3000/api/cards/' + id).pipe(
       tap(() => {
-        const index = this.cards.findIndex(card => card._id === id);
-        if (index !== -1) {
-          this.cards$.next(this.cards)
-        }
+        this.cards$.next(this.cards)
+
       }),
       catchError(error => throwError(error.error.message))
     );
