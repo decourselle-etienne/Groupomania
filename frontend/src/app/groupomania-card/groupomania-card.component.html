@@ -12,7 +12,7 @@
   </div>
   <div class="content">
     <p class="content__text">{{card.content}}</p>
-    <img [src]="card.imageUrl" [alt]="">
+    <img [src]="card.imageUrl" [alt]="card.imageUrl.substr(29)">
   </div>
   <div class="likes">
     <i class="fa-solid fa-thumbs-up" (click)="Like()"></i>

@@ -34,6 +34,6 @@
         1 caractère spécial</p>
     </div>
   </div>
-  <button mat-raised-button color="primary" [disabled]="signupForm.invalid" (click)="onSignup()">S'inscrire</button>
+  <button mat-raised-button color="primary" (click)="onSignup()">S'inscrire</button>
   <p class="text-danger" *ngIf="errorMessage">{{ errorMessage }}</p>
 </form>

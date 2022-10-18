@@ -6,7 +6,7 @@
     </div>
 
     <div class="form-group button-row">
-      <input type="file" accept="image/*" #imageInput (change)="onFileAdded($event)">
+      <input aria-label="file" type="file" accept="image/*" #imageInput (change)="onFileAdded($event)">
       <button mat-raised-button color="primary" (click)="imageInput.click()">ADD IMAGE</button>
       <img [src]="imagePreview" *ngIf="imagePreview">
       <button (click)="onSubmit()" [disabled]="cardForm.invalid">Poster</button>
