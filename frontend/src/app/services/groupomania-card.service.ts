@@ -101,7 +101,10 @@ export class GroupomaniaCardService {
   // permet de supprimer une card (post)
   deleteCard(id: string) {
     return this.http.delete<{ message: string }>('http://localhost:3000/api/cards/' + id).pipe(
-      tap(() => this.cards$.next(this.cards)),
+      tap(() => {
+        this.cards$.next(this.cards)
+        location.reload();
+      }),
       catchError(error => throwError(error.error.message))
     );
   }
