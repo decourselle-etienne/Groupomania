@@ -13,7 +13,7 @@ body {
 
 button {
   color: white;
-  background-color: $primary-color;
+  background-color: $third-color;
   font-size: 15px;
   border: none;
   border-radius: 20px;
@@ -22,6 +22,6 @@ button {
 
   button:disabled {
     color: black;
-    background-color: $third-color;
+    background-color: $secondary-color;
   }
 }

@@ -1,4 +1,4 @@
-$primary-color: #FD2D01;
+$primary-color: #FF4500; //#FD2D01;
 $secondary-color: #FFD7D7;
 $third-color: #4E5166;
 
@@ -35,7 +35,7 @@ header {
     }
 
     .active {
-      color: $primary-color;
+      color: $third-color;
       font-weight: bold;
     }
   }

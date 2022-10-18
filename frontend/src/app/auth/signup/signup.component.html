@@ -3,14 +3,14 @@
 <form [formGroup]="signupForm" *ngIf="!loading">
   <div class="form-group">
     <label for="prenom">Prénom</label>
-    <input type="text" class="form-control" id="firstname" formControlName="prenom">
+    <input type="text" class="form-control" id="prenom" formControlName="prenom">
     <p class="form-error"
       *ngIf="signupForm.controls['prenom'].hasError('required') && signupForm.controls['prenom'].touched "> Veuillez
       entrer votre nom</p>
   </div>
   <div class="form-group">
     <label for="nom">Nom</label>
-    <input type="text" class="form-control" id="lastname" formControlName="nom">
+    <input type="text" class="form-control" id="nom" formControlName="nom">
     <p class="form-error"
       *ngIf="signupForm.controls['nom'].hasError('required') && signupForm.controls['nom'].touched "> Veuillez
       entrer votre prénom</p>
@@ -34,6 +34,6 @@
         1 caractère spécial</p>
     </div>
   </div>
-  <button mat-raised-button color="primary" (click)="onSignup()">S'inscrire</button>
+  <button mat-raised-button color="primary" [disabled]="signupForm.invalid" (click)="onSignup()">S'inscrire</button>
   <p class="text-danger" *ngIf="errorMessage">{{ errorMessage }}</p>
 </form>
